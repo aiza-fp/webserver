@@ -4,13 +4,9 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-ENV PYTHONPATH=/app
+#ENV PYTHONPATH=/app
 
 RUN pip install --no-cache-dir -r requirements.txt
-
-RUN pip show gunicorn 
-RUN pyenv which gunicorn
-RUN which gunicorn
 
 COPY . .
 

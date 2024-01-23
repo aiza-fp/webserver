@@ -1,10 +1,10 @@
 version: '3'
 
 services:
-  ziurtagiriak:
+  web:
     build:
-      context: .
-      dockerfile: ZiurtagiriakAPP/Dockerfile
+      context: ./ZiurtagiriakAPP
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     depends_on:
@@ -20,7 +20,7 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - ziurtagiriak
+      - web
     networks:
       - besu_network
     volumes:
