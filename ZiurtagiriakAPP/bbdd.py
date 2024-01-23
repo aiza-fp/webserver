@@ -1,6 +1,6 @@
 import mysql.connector as con
 
-bbdd = con.connect(host='localhost', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
+bbdd = con.connect(host='database', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
 cursor = bbdd.cursor()
 query = "SELECT id, izena FROM erakundeak"
 cursor.execute(query)

@@ -13,7 +13,7 @@ def hello_world():
 @app.get("/jardunaldia/")
 def get_jardunaldia():
     import mysql.connector as con
-    bbdd = con.connect(host='localhost', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
+    bbdd = con.connect(host='database', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
     cursor = bbdd.cursor()
     query = "SELECT id, izena FROM erakundeak"
     cursor.execute(query)
@@ -42,7 +42,7 @@ def post_jardunaldia():
     csvFile = request.files['csv'].readlines()
     print(erakundea, emailea, formakuntza, lekua, data)
     #BBDD
-    bbdd = con.connect(host='localhost', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
+    bbdd = con.connect(host='database', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
     cursor = bbdd.cursor()
     query = "INSERT INTO jardunaldiak (iderakundea, emailea, formakuntza, data, lekua) VALUES (%s,%s,%s,%s,%s)"
     cursor.execute(query, (erakundea, emailea, formakuntza, data, lekua))
@@ -96,7 +96,7 @@ def loka(lokalizatzailea):
     import mysql.connector as con
     lok = lokalizatzailea.split("-")
     if (len(lok) == 3):
-        bbdd = con.connect(host='localhost', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
+        bbdd = con.connect(host='database', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
         cursor = bbdd.cursor()
         query = """SELECT p.izena, p.emaila, e.izena, j.emailea, j.formakuntza, j.data, j.lekua, p.id
         FROM partaideak p, jardunaldiak j, erakundeak e
@@ -129,7 +129,7 @@ def loka(lokalizatzailea):
 def ezabatu_ziurtagiria(lokalizatzailea):
     import mysql.connector as con
     lok = lokalizatzailea.split("-")
-    bbdd = con.connect(host='localhost', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
+    bbdd = con.connect(host='database', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
     cursor = bbdd.cursor()
     query = "DELETE FROM partaideak WHERE %s = lokalizatzailea AND %s = id%100"
     cursor.execute(query, (lok[1], int(lok[2])))
@@ -155,7 +155,7 @@ def post_lokalizatzailea():
     return loka(lok)
     """ contract=request.form.get('contract_address')
     print(contract)
-    web3 = Web3(Web3.HTTPProvider('http://localhost:7545'))
+    web3 = Web3(Web3.HTTPProvider('http://besu_node1:8545'))
 
     conexion = None
     metodos = None
@@ -178,7 +178,7 @@ def post_sortu_nft_baztertu():
     if addr:
         with open("static/abi/ziurtagiriak.abi", "r") as f:
             abi = f.read()
-        web3 = Web3(Web3.HTTPProvider('http://172.16.0.2:8545'))
+        web3 = Web3(Web3.HTTPProvider('http://besu_node1:8545'))
         #Berria 10/11/2023
         web3.middleware_onion.inject(geth_poa_middleware, layer=0)
         # Note: Never commit your key in your code! Use env variables instead:
@@ -190,11 +190,11 @@ def post_sortu_nft_baztertu():
         owner_addr = web3.eth.account.from_key(clave_privada)
         #Bukatu berria
 
-        # path = "http://localhost:5000/static/nft/"
-        path = "http://ziurtagiriakapp.localhost/static/nft/"
+        path = "http://localhost:5000/static/nft/"
+        #path = "http://ziurtagiriakapp.localhost/static/nft/"
 
         lok = lokalizatzailea.split("-")
-        bbdd = con.connect(host='localhost', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
+        bbdd = con.connect(host='database', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
         cursor = bbdd.cursor()
         query = """SELECT p.izena, p.emaila, e.izena, j.emailea, j.formakuntza, j.data, j.lekua, p.id
         FROM partaideak p, jardunaldiak j, erakundeak e
@@ -288,7 +288,7 @@ def post_bilatzailea():
     if addr:
         with open("static/abi/ziurtagiriak.abi", "r") as f:
             abi = f.read()
-        web3 = Web3(Web3.HTTPProvider('http://192.168.10.1:8545'))
+        web3 = Web3(Web3.HTTPProvider('http://besu_node1:8545'))
 
         path = "http://localhost:5000/static/nft/"
         lok = ""

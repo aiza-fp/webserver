@@ -5,6 +5,7 @@ services:
     build:
       context: ./ZiurtagiriakAPP
       dockerfile: Dockerfile
+    hostname: ziurtagiriak
     ports:
       - "5000:5000"
     depends_on:
@@ -29,6 +30,7 @@ services:
 
   db:
     image: mariadb:latest
+    hostname: database
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: blockchain
