@@ -1,0 +1,5 @@
+wheel
+gunicorn
+flask
+web3
+mysql-connector
