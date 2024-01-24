@@ -59,7 +59,7 @@ def post_jardunaldia():
                 linea = row.decode().split(";")
                 izena = linea[0]
                 receiver_email = linea[1]
-                receiver_email = "ander.lo@icjardin.com"
+                receiver_email = "aiza@fpzornotza.com"
                 localizador = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
                 query = "INSERT INTO partaideak (izena, emaila, lokalizatzailea, id_jardunaldia) VALUES (%s,%s,%s,%s)"
                 cursor.execute(query, (izena, receiver_email, localizador, id_jar))

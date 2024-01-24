@@ -32,7 +32,7 @@ services:
     image: mariadb:latest
     hostname: database
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: blockchain
       MYSQL_DATABASE: blockchain
       MYSQL_USER: blockchain
       MYSQL_PASSWORD: blockchain

@@ -18,6 +18,7 @@
 --
 -- Table structure for table `erakundeak`
 --
+USE blockchain;
 
 DROP TABLE IF EXISTS `erakundeak`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
