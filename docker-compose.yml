@@ -22,14 +22,12 @@ services:
     restart: always
     ports:
       - "80:80"
-      - "81:81"
     depends_on:
       - web
     networks:
       - besu_network
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/:/etc/nginx/
       - ./nginx/5xx.html:/www/error_pages/5xx.html
   db:
     image: mariadb:latest
