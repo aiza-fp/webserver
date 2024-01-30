@@ -1,5 +1,4 @@
-wheel
+Flask
 gunicorn
-flask
-web3
 mysql-connector
+web3
