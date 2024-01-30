@@ -4,6 +4,8 @@ import os
 
 app = Flask(__name__, template_folder='www', static_url_path='/static')
 contract_addr = os.environ.get('DIRECCION_CONTRATO_ZIURTAGIRIAK')
+provider = "http://besu_node3:8545"
+#to-do: definir el provider dentro de las funciones seleccionando uno cada vez
 
 @app.route("/")
 def hello_world():
@@ -154,7 +156,7 @@ def post_lokalizatzailea():
     return loka(lok)
     """ contract=request.form.get('contract_address')
     print(contract)
-    web3 = Web3(Web3.HTTPProvider('http://besu_node1:8545'))
+    web3 = Web3(Web3.HTTPProvider(provider))
 
     conexion = None
     metodos = None
@@ -177,7 +179,7 @@ def post_sortu_nft_baztertu():
     if addr:
         with open("static/abi/ziurtagiriak.abi", "r") as f:
             abi = f.read()
-        web3 = Web3(Web3.HTTPProvider('http://besu_node1:8545'))
+        web3 = Web3(Web3.HTTPProvider(provider))
         #Berria 10/11/2023
         web3.middleware_onion.inject(geth_poa_middleware, layer=0)
         # Note: Never commit your key in your code! Use env variables instead:
@@ -265,13 +267,14 @@ def post_sortu_nft_baztertu():
             print("SafeMint addr: ",  addr, flush=True);
             print("SafeMint uri:",  uri, flush=True);
             
-            sse = contract_object.functions.safeMint(addr, uri).build_transaction({"from": owner_addr.address, "nonce": web3.eth.get_transaction_count(owner_addr.address), "maxFeePerGas": 0, "maxPriorityFeePerGas": 0, "gas": 0})
-            #, "type": 2, "chainId": 1337})
+            sse = contract_object.functions.safeMint(addr, uri).build_transaction({"from": owner_addr.address, "nonce": web3.eth.get_transaction_count(owner_addr.address), "maxFeePerGas": 0, "maxPriorityFeePerGas": 0}) 
+            #, "gas": 0, "type": 2})
+            #, "chainId": 1337})
             print("SafeMint realizado, clave privada owner: ", owner_addr.key, flush=True)
             print("Objeto contrato: ", flush=True)
             print(sse, flush=True)
             print("SafeMint realizado, clave privada owner: ", owner_addr.key, flush=True)
-            signed_tx = web3.eth.account.sign_transaction(sse, private_key=owner_addr.key)
+            signed_tx = web3.eth.account.sign_transaction(dict(sse), private_key=owner_addr.key)
             
             print("Transaccion firmada, transaccion:", flush=True)
             print(signed_tx, flush=True)
@@ -279,7 +282,7 @@ def post_sortu_nft_baztertu():
             print(signed_tx.rawTransaction, flush=True)
             # Send the raw transaction:
             #assert billboard.functions.message().call() == "gm"
-            tx_hash = web3.eth.send_raw_transaction(signed_tx.rawTransaction)
+            tx_hash = web3.eth.send_raw_transaction(Web3.to_hex(signed_tx.rawTransaction))
             web3.eth.wait_for_transaction_receipt(tx_hash)
             #assert billboard.functions.message().call() == "gn"
             #Bukatu Berria
@@ -302,7 +305,7 @@ def post_bilatzailea():
     if addr:
         with open("static/abi/ziurtagiriak.abi", "r") as f:
             abi = f.read()
-        web3 = Web3(Web3.HTTPProvider('http://besu_node1:8545'))
+        web3 = Web3(Web3.HTTPProvider(provider))
 
         path = "http://localhost:5000/static/nft/"
         lok = ""
