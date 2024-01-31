@@ -14,7 +14,7 @@ def hello_world():
 @app.get("/jardunaldia/")
 def get_jardunaldia():
     import mysql.connector as con
-    bbdd = con.connect(host='database', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
+    bbdd = con.connect(host='database', database='ziurtagiriak', user='blockchain', password='blockchain', autocommit=True)
     cursor = bbdd.cursor()
     query = "SELECT id, izena FROM erakundeak"
     cursor.execute(query)
@@ -43,7 +43,7 @@ def post_jardunaldia():
     csvFile = request.files['csv'].readlines()
     print(erakundea, emailea, formakuntza, lekua, data)
     #BBDD
-    bbdd = con.connect(host='database', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
+    bbdd = con.connect(host='database', database='ziurtagiriak', user='blockchain', password='blockchain', autocommit=True)
     cursor = bbdd.cursor()
     query = "INSERT INTO jardunaldiak (iderakundea, emailea, formakuntza, data, lekua) VALUES (%s,%s,%s,%s,%s)"
     cursor.execute(query, (erakundea, emailea, formakuntza, data, lekua))
@@ -97,7 +97,7 @@ def loka(lokalizatzailea):
     import mysql.connector as con
     lok = lokalizatzailea.split("-")
     if (len(lok) == 3):
-        bbdd = con.connect(host='database', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
+        bbdd = con.connect(host='database', database='ziurtagiriak', user='blockchain', password='blockchain', autocommit=True)
         cursor = bbdd.cursor()
         query = """SELECT p.izena, p.emaila, e.izena, j.emailea, j.formakuntza, j.data, j.lekua, p.id
         FROM partaideak p, jardunaldiak j, erakundeak e
@@ -130,7 +130,7 @@ def loka(lokalizatzailea):
 def ezabatu_ziurtagiria(lokalizatzailea):
     import mysql.connector as con
     lok = lokalizatzailea.split("-")
-    bbdd = con.connect(host='database', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
+    bbdd = con.connect(host='database', database='ziurtagiriak', user='blockchain', password='blockchain', autocommit=True)
     cursor = bbdd.cursor()
     query = "DELETE FROM partaideak WHERE %s = lokalizatzailea AND %s = id%100"
     cursor.execute(query, (lok[1], int(lok[2])))
@@ -196,7 +196,7 @@ def post_sortu_nft_baztertu():
         #path = "http://ziurtagiriak.localhost/static/nft/"
 
         lok = lokalizatzailea.split("-")
-        bbdd = con.connect(host='database', database='blockchain', user='blockchain', password='blockchain', autocommit=True)
+        bbdd = con.connect(host='database', database='ziurtagiriak', user='blockchain', password='blockchain', autocommit=True)
         cursor = bbdd.cursor()
         query = """SELECT p.izena, p.emaila, e.izena, j.emailea, j.formakuntza, j.data, j.lekua, p.id
         FROM partaideak p, jardunaldiak j, erakundeak e
@@ -259,35 +259,35 @@ def post_sortu_nft_baztertu():
 
         if web3.is_connected():
             print("Web3 conectado, direccion contrato: ", contract_addr, flush=True)
-            print("Web3 conectado, direccion owner: ", owner_addr.address, flush=True)
+            #print("Web3 conectado, direccion owner: ", owner_addr.address, flush=True)
             contract_object = web3.eth.contract(abi=abi, address=contract_addr)
             # sse = contract_object.functions.safeMint(addr, uri).transact({"from": owner_addr})
             #Berria 10/11/2023
-            print("Transaction count para este owner: ",  web3.eth.get_transaction_count(owner_addr.address), flush=True);
-            print("SafeMint addr: ",  addr, flush=True);
-            print("SafeMint uri:",  uri, flush=True);
+            #print("Transaction count para este owner: ",  web3.eth.get_transaction_count(owner_addr.address), flush=True);
+            #print("SafeMint addr: ",  addr, flush=True);
+            #print("SafeMint uri:",  uri, flush=True);
             
             sse = contract_object.functions.safeMint(addr, uri).build_transaction({"from": owner_addr.address, "nonce": web3.eth.get_transaction_count(owner_addr.address), "maxFeePerGas": 0, "maxPriorityFeePerGas": 0}) 
             #, "gas": 0, "type": 2})
             #, "chainId": 1337})
-            print("SafeMint realizado, clave privada owner: ", owner_addr.key, flush=True)
-            print("Objeto contrato: ", flush=True)
-            print(sse, flush=True)
-            print("SafeMint realizado, clave privada owner: ", owner_addr.key, flush=True)
+            #print("SafeMint realizado, clave privada owner: ", owner_addr.key, flush=True)
+            #print("Objeto contrato: ", flush=True)
+            #print(sse, flush=True)
+            #print("SafeMint realizado, clave privada owner: ", owner_addr.key, flush=True)
             signed_tx = web3.eth.account.sign_transaction(dict(sse), private_key=owner_addr.key)
             
-            print("Transaccion firmada, transaccion:", flush=True)
-            print(signed_tx, flush=True)
-            print("Transaccion firmada, RAW transaccion:", flush=True)
-            print(signed_tx.rawTransaction, flush=True)
+            #print("Transaccion firmada, transaccion:", flush=True)
+            #print(signed_tx, flush=True)
+            #print("Transaccion firmada, RAW transaccion:", flush=True)
+            #print(signed_tx.rawTransaction, flush=True)
             # Send the raw transaction:
             #assert billboard.functions.message().call() == "gm"
             tx_hash = web3.eth.send_raw_transaction(Web3.to_hex(signed_tx.rawTransaction))
             web3.eth.wait_for_transaction_receipt(tx_hash)
             #assert billboard.functions.message().call() == "gn"
             #Bukatu Berria
-            print(sse, flush=True)
-            print(tx_hash, flush=True)
+            #print(sse, flush=True)
+            #print(tx_hash, flush=True)
         ezabatu_ziurtagiria(lokalizatzailea)
         return render_template("nft.html")
     else:

@@ -18,7 +18,9 @@
 --
 -- Table structure for table `erakundeak`
 --
-USE blockchain;
+-- Check if the 'ziurtagiriak' database exists, if not, create it and then use it for the following operations
+CREATE DATABASE IF NOT EXISTS ziurtagiriak;
+USE ziurtagiriak;
 
 DROP TABLE IF EXISTS `erakundeak`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
