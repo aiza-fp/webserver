@@ -22,6 +22,9 @@
 CREATE DATABASE IF NOT EXISTS ziurtagiriak;
 USE ziurtagiriak;
 
+GRANT ALL PRIVILEGES ON ziurtagiriak.* TO 'blockchain'@'%';
+FLUSH PRIVILEGES;
+
 DROP TABLE IF EXISTS `erakundeak`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
