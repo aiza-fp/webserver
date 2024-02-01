@@ -14,7 +14,7 @@ def hello_world():
 @app.get("/jardunaldia/")
 def get_jardunaldia():
     import mysql.connector as con
-    bbdd = con.connect(host='database', database='ziurtagiriak', user='blockchain', password='blockchain', autocommit=True)
+    bbdd = con.connect(host='database', database='ziurtagiriak', user='ziurtagiriak', password='ziurtagiriak', autocommit=True)
     cursor = bbdd.cursor()
     query = "SELECT id, izena FROM erakundeak"
     cursor.execute(query)
@@ -43,7 +43,7 @@ def post_jardunaldia():
     csvFile = request.files['csv'].readlines()
     print(erakundea, emailea, formakuntza, lekua, data)
     #BBDD
-    bbdd = con.connect(host='database', database='ziurtagiriak', user='blockchain', password='blockchain', autocommit=True)
+    bbdd = con.connect(host='database', database='ziurtagiriak', user='ziurtagiriak', password='ziurtagiriak', autocommit=True)
     cursor = bbdd.cursor()
     query = "INSERT INTO jardunaldiak (iderakundea, emailea, formakuntza, data, lekua) VALUES (%s,%s,%s,%s,%s)"
     cursor.execute(query, (erakundea, emailea, formakuntza, data, lekua))
@@ -97,7 +97,7 @@ def loka(lokalizatzailea):
     import mysql.connector as con
     lok = lokalizatzailea.split("-")
     if (len(lok) == 3):
-        bbdd = con.connect(host='database', database='ziurtagiriak', user='blockchain', password='blockchain', autocommit=True)
+        bbdd = con.connect(host='database', database='ziurtagiriak', user='ziurtagiriak', password='ziurtagiriak', autocommit=True)
         cursor = bbdd.cursor()
         query = """SELECT p.izena, p.emaila, e.izena, j.emailea, j.formakuntza, j.data, j.lekua, p.id
         FROM partaideak p, jardunaldiak j, erakundeak e
@@ -130,7 +130,7 @@ def loka(lokalizatzailea):
 def ezabatu_ziurtagiria(lokalizatzailea):
     import mysql.connector as con
     lok = lokalizatzailea.split("-")
-    bbdd = con.connect(host='database', database='ziurtagiriak', user='blockchain', password='blockchain', autocommit=True)
+    bbdd = con.connect(host='database', database='ziurtagiriak', user='ziurtagiriak', password='ziurtagiriak', autocommit=True)
     cursor = bbdd.cursor()
     query = "DELETE FROM partaideak WHERE %s = lokalizatzailea AND %s = id%100"
     cursor.execute(query, (lok[1], int(lok[2])))
@@ -196,7 +196,7 @@ def post_sortu_nft_baztertu():
         #path = "http://ziurtagiriak.localhost/static/nft/"
 
         lok = lokalizatzailea.split("-")
-        bbdd = con.connect(host='database', database='ziurtagiriak', user='blockchain', password='blockchain', autocommit=True)
+        bbdd = con.connect(host='database', database='ziurtagiriak', user='ziurtagiriak', password='ziurtagiriak', autocommit=True)
         cursor = bbdd.cursor()
         query = """SELECT p.izena, p.emaila, e.izena, j.emailea, j.formakuntza, j.data, j.lekua, p.id
         FROM partaideak p, jardunaldiak j, erakundeak e

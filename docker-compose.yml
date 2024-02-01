@@ -22,8 +22,6 @@ services:
     restart: always
     ports:
       - "80:80"
-    depends_on:
-      - web
     networks:
       - besu_network
     volumes:
@@ -36,8 +34,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: blockchain
       #MYSQL_DATABASE: blockchain
-      MYSQL_USER: blockchain
-      MYSQL_PASSWORD: blockchain
+      #MYSQL_USER: blockchain
+      #MYSQL_PASSWORD: blockchain
     ports:
       - "3306:3306"
     networks:
@@ -45,6 +43,7 @@ services:
     volumes:
       - ./ZiurtagiriakAPP/blockchain-dump.sql:/docker-entrypoint-initdb.d/blockchain-dump.sql
       - db_data:/var/lib/mysql
+      #Nuevos scripts con: docker exec -i mariadb-container mysql -u root -p "your_password" < script.sql
 
 networks:
   besu_network:

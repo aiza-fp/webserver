@@ -22,7 +22,9 @@
 CREATE DATABASE IF NOT EXISTS ziurtagiriak;
 USE ziurtagiriak;
 
-GRANT ALL PRIVILEGES ON ziurtagiriak.* TO 'blockchain'@'%';
+CREATE USER IF NOT EXISTS 'ziurtagiriak'@'%' IDENTIFIED BY 'ziurtagiriak';
+
+GRANT ALL PRIVILEGES ON ziurtagiriak.* TO 'ziurtagiriak'@'%';
 FLUSH PRIVILEGES;
 
 DROP TABLE IF EXISTS `erakundeak`;
